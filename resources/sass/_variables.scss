@@ -1,0 +1,22 @@
+$enable-deprecation-messages: false;
+
+$purple: #292f4c;
+$purple-light: #0085ff;
+
+$primary: $purple;
+$primary-grad: #292f4c!important ;
+$sidebar-width: 200px;
+$gray-200: #e9ecef;
+$theme-colors: (
+    primary: $primary
+  );
+  $form-group-margin-bottom:              .5rem !default;
+
+  .table{ 
+    thead{
+      th {
+        white-space: nowrap;
+    }
+    }
+
+  } 
