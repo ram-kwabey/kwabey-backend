@@ -1,0 +1,310 @@
+/**
+* Styles
+*/
+body {
+	font-size: inherit;
+}
+.main-sidebar {
+	width: $sidebar-width;
+	&::before {
+		width: $sidebar-width;
+	}
+}
+.layout-fixed {
+	.brand-link {
+		width: $sidebar-width;
+	}
+}
+.user-block {
+	max-width: $sidebar-width;
+}
+.sidebar-dark-primary {
+	.nav-sidebar {
+		>.nav-item {
+			>.nav-link.active {
+				background-color: $gray-200;
+				color: $primary;
+			}
+		}
+	}
+}
+.sidebar-light-primary {
+	.nav-sidebar {
+		>.nav-item {
+			>.nav-link.active {
+				background-color: $gray-200;
+				color: $primary;
+			}
+		}
+	}
+}
+[class*=sidebar-dark-] {
+	.nav-sidebar {
+		>.nav-item.has-treeview {
+			>.nav-link {
+				background-color: rgba(255, 255, 255, 0.1);
+				color: #ffffff;
+				&:focus {
+					background-color: rgba(255, 255, 255, 0.1);
+					color: #ffffff;
+				}
+			}
+		}
+		>.nav-item {
+			&:hover {
+				>.nav-link {
+					background-color: rgba(255, 255, 255, 0.1);
+					color: #ffffff;
+				}
+			}
+		}
+	}
+}
+.nav-sidebar {
+	.nav-item {
+		>.nav-link {
+			border-radius: 100px;
+		}
+	}
+	.nav-item.menu-open {
+		>.nav-link {
+			margin-bottom: 10px;
+		}
+	}
+	.nav-item.has-treeview {
+		>.nav-link {
+			margin-bottom: 10px;
+		}
+	}
+}
+[class*=sidebar-dark] {
+	.brand-link {
+		border-bottom: 1px solid $primary;
+	}
+}
+.bg-primary {
+	background: $primary-grad !important;
+}
+.btn-primary {
+	color: #ffffff;
+	background-color: #0071d9;
+	border-color:#0071d9;
+	box-shadow: none;
+  }
+  
+  .btn-primary:hover {
+	color: #ffffff;
+	background-color: #0085ff;
+	border-color:#0085ff;
+  }
+  
+  .btn-primary:focus,
+  .btn-primary.focus {
+	color: #ffffff;
+	background-color: #0085ff;
+	box-shadow: 0 0 0 0 rgba(73, 78, 103, 0.5);
+  }
+  .btn-outline-primary {
+	color: #0085ff;
+  }
+  .btn-outline-primary:hover {
+	color: #ffffff;
+	background-color: #0085ff;
+  }
+  .btn-outline-primary.disabled,
+.btn-outline-primary:disabled {
+  color: #0085ff;
+  background-color: transparent;
+}
+
+
+.btn-outline-primary:not(:disabled):not(.disabled):active,
+.btn-outline-primary:not(:disabled):not(.disabled).active,
+.show > .btn-outline-primary.dropdown-toggle {
+  color: #ffffff;
+  background-color: #0085ff;
+  border-color: #0085ff;
+}
+.custom-control-input:checked ~ .custom-control-label::before {
+	color: #ffffff;
+	border-color: #0085ff;
+	background-color: #0085ff;
+	box-shadow: none;
+  }
+.text-primary {
+	color: #007bff !important;		
+}
+.lead-container {
+	.heading-text {
+		line-height: normal;
+		font-size: 13px;
+		min-height: 20px;
+		min-width: 130px;
+		i {
+			display: none;
+		}
+	}
+	.text-block {
+		line-height: normal;
+		font-size: 13px;
+		min-height: 20px;
+		min-width: 130px;
+	}
+}
+.form-control {
+	.vdatetime-input { width: 100%;
+	height: 100%;
+	border: none;
+	background: transparent;
+	box-shadow: none;
+	outline: none;
+	color: $dark;
+}
+} 
+	.btn-circle {
+		border-radius: 100%;
+		width: 34px;
+		height: 34px;
+		padding: 6px;
+		font-size: 1.3em;
+		line-height: normal;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		float: left;
+	}
+
+.filter-asc {
+	border-bottom-color: #cfbcf3 !important;
+}
+.filter-desc {
+	border-top-color: #cfbcf3 !important;
+}
+.active-filter-desc {
+	border-top-color: $primary !important;
+}
+.active-filter-asc {
+	border-bottom-color: $primary !important;
+}
+@media (min-width: 768px) {
+	body {
+		&:not(.sidebar-mini-md) {
+			.content-wrapper {
+				margin-left: $sidebar-width;
+			}
+			.main-footer {
+				margin-left: $sidebar-width;
+			}
+			.main-header {
+				margin-left: $sidebar-width;
+			}
+		}
+	}
+}
+
+
+
+.notification-unread {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+.notification-unread span {
+    white-space: normal;
+    min-width: 40px;
+}
+.notification-unread .notification-text {
+    font-size: 14px;
+    line-height: normal;
+    margin-right: 10px;
+}
+.notification-unread .badge {
+    font-size: 12px !important;
+}
+
+/** For notification page -- unread notifications **/
+.notification--unread td {
+    font-weight: 900;
+}
+
+.notification--unread td:first-child:before{
+	content: '• ';
+	font-weight: 900;
+	color: $primary;
+}
+
+/** Developer css **/
+
+tr.laravel-vue-datatable-tbody-tr.danger {
+    background-color: rgba(249, 4, 4, 0.75)!important;
+}
+
+input#image {
+    height: fit-content;
+}
+
+
+#mySidebar {
+	height: 100%  !important;
+	width: 0;
+	position: fixed;
+	z-index: 9999;
+	top: 0;
+	right: 0;
+	overflow-x: hidden;
+	transition: 0.5s;
+	padding-top: 0px;
+  }
+  
+  #mySidebar a {
+	padding: 8px 8px 8px 32px;
+	text-decoration: none;
+	font-size: 25px;
+	color: #818181;
+	display: block;
+	transition: 0.3s;
+  }
+  
+  #mySidebar a:hover {
+	color: #f1f1f1;
+  }
+  
+  #mySidebar .closebtn {
+    position: fixed;
+    top: 4px;
+    right: 25px;
+    display: none;
+}
+#mySidebar label {
+    margin-bottom: 0;
+    font-weight: normal;
+}
+#mySidebar.open .closebtn{
+	display: block;
+}
+.sidebar-filter .form-control.reportrange-text {
+    width: 355px;
+    height: calc(1.8125rem + 2px);
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+    box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.quote-title {
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 3px solid;
+    line-height: 3rem;
+    border-image: linear-gradient(to right, #20c997 25%, yellow 25%, yellow 50%,red 50%, red 75%, #17a2b8 75%) 5;
+}
+.right-info-box .info-box {
+    flex-direction: row-reverse;
+    border-bottom-width: 3px!important;
+}
+.reports .apexcharts-canvas{
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2);
+    border-radius: 0.25rem;
+    margin-bottom: 2rem;
+}
