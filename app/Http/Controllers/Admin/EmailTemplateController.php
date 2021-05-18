@@ -19,7 +19,7 @@ class EmailTemplateController extends Controller
         $orderBy = $request->input('column');
         $orderBydir = $request->input("dir");
         $length = $request->input('length');
-
+ 
         $data = EmailTemplate::where("name", "LIKE", "%$searchValue%")
             ->orderBy($orderBy, $orderBydir)
             ->paginate($length);

@@ -1,0 +1,146 @@
+@charset "utf-8" /* CSS Document */
+
+@font-face {
+ font-family: Poppins-Regular;
+ src: url('../poppins/Poppins-Regular.ttf');
+}
+@font-face {
+	font-family: Poppins-Medium;
+	src: url('../poppins/Poppins-Medium.ttf');
+}
+@font-face {
+	font-family: Poppins-Bold;
+	src: url('../poppins/Poppins-Bold.ttf');
+}
+@font-face {
+	font-family: Poppins-SemiBold;
+	src: url('../poppins/Poppins-SemiBold.ttf');
+}
+body {
+	color: #000;
+	overflow-x: hidden;
+	height: 100%;
+	background-color: #B0BEC5;
+	background-repeat: no-repeat;
+font-family: Poppins-Regular, sans-serif;
+}
+.card0 {
+	box-shadow: 0px 4px 8px 0px #757575;
+	border-radius: 0px;  
+}
+.card2 {
+    margin: 0px 35px
+}
+.row {
+	margin-left: 0 !important
+}
+.logo {
+	width: 30%;
+	margin-top: 20px;
+	margin-left: 35px
+}
+/*.image {
+    width: 360px;
+    height: 280px
+}*/
+
+.border-line {
+	border-right: 1px solid #EEEEEE
+}
+.mrT {
+	margin-top: 9rem
+}
+.welcometxt {
+	color: #293552;
+	margin-bottom: 16px;
+	text-shadow: 2px 2px #c3c3c3;
+	font-family: Poppins-SemiBold; padding-bottom:40px
+}
+
+::placeholder {
+ color: #BDBDBD;
+ opacity: 1;
+ font-weight: 300
+}
+
+:-ms-input-placeholder {
+ color: #BDBDBD;
+ font-weight: 300
+}
+
+::-ms-input-placeholder {
+ color: #BDBDBD;
+ font-weight: 300
+}
+input, textarea {
+	padding: 10px 12px 10px 39px;
+	border: 1px solid lightgrey;
+	border-radius: 2px;
+	margin-bottom: 5px;
+	margin-top: 2px;
+	width: 100%;
+	box-sizing: border-box;
+	color: #2C3E50;
+	font-size: 14px !important;
+	letter-spacing: 1px;
+	border-radius: 9px; -moz-box-shadow: 2px 2px #c3c3c3 !important;
+	-webkit-box-shadow: 2px 2px #c3c3c3 !important;
+	box-shadow: 2px 2px #c3c3c3 !important;
+
+}
+.input-icons i {
+	position: absolute;
+	font-size: 1.5rem;
+}
+.input-icons {
+	width: 100%;
+	margin-bottom: 10px;
+}
+.icon {
+	padding: 31px 10px 10px 3px;
+	color: #293552;
+	min-width: 50px;
+	text-align: center;
+}
+.input-field {
+	width: 100%;
+	padding: 10px;
+	text-align: center;
+}
+input:focus, textarea:focus {
+-moz-box-shadow: 2px 2px #19a138 !important;
+	-webkit-box-shadow: 2px 2px #19a138 !important;
+	box-shadow: 2px 2px #19a138 !important;
+
+	border: 1px solid #11b838;
+	outline-width: 0
+}
+button:focus {
+
+	outline-width: 0
+}
+
+.log-in {
+	width: 50%;
+	margin: auto; height:47px; font-size:20px !important; font-weight:bold !important; border-radius:2.25rem !important
+}
+ @media screen and (max-width: 991px) {
+.logo {
+	margin-left: 0px
+}
+
+
+.border-line {
+	border-right: none
+}
+.card2 {
+	border-top: 1px solid #EEEEEE !important;
+	margin: 0px 15px
+}
+}
+@media screen and (max-width: 1200px) {
+	.mrT {
+	margin-top: 0
+}
+.mb{ margin-bottom:0}
+}

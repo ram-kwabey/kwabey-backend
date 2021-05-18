@@ -14,7 +14,7 @@ use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
-
+ 
     public function getUsersCount(Request $request){
         Carbon::setWeekStartsAt(Carbon::SUNDAY);
         Carbon::setWeekEndsAt(Carbon::SATURDAY);
