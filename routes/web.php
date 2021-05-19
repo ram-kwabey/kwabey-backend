@@ -70,6 +70,13 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->middleware(['web','a
     Route::post('updateTemplate/{id}','EmailTemplateController@update')->name('updateTemplate');
 });
 
+Route::prefix('admin')->namespace('Admin')->name('admin.')->middleware(['web','auth'])->group(function(){
+    //axios requests
+    Route::post('store-figure','FigureController@createUpdateFigure')->name('store-figure');
+    
+});
+
+
 Route::group(['middleware' => ['web','auth']], function () {
 
     Route::get('/', function () {
