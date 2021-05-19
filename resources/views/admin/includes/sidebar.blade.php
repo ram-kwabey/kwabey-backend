@@ -46,44 +46,6 @@
           </li>
           @endcan
 
-          @can('list_users')
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-briefcase"></i>
-              <p>
-                Product manage
-                <i class="right fas fa-angle-right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview" style="display: none;">
-              <li class="nav-item">
-                <router-link class="nav-link" to="/size">
-                  <i class="nav-icon fas fa-envelope-open-text"></i>
-                  <p>
-                    Size
-                  </p>
-                </router-link>
-              </li>
-              <li class="nav-item">
-                  <router-link class="nav-link" to="/color"><i class="nav-icon fab fa-slideshare"></i>
-                  <p>
-                    Color
-                  </p>
-                </router-link>
-                </li>
-              <li class="nav-item">
-              <router-link class="nav-link" to="/material"><i class="nav-icon far fa-id-badge"></i>
-                  <p>
-                    Material
-                  </p>
-              </router-link>
-              </li>
-            </ul>
-          </li>
-          @endcan
-
-
-
           @can('list_settings')
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">

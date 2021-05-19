@@ -14,6 +14,8 @@ let settingsEmailTemplateComponent   = authPermission.includes("list_settings") 
 let settingsRolesComponent       = authPermission.includes("list_settings") ? "settings/UsersRoleComponent" : "error/403";
 let settingsPermissionsComponent  = authPermission.includes("list_settings") ? "settings/UsersPermissionComponent" : "error/403";
 
+let figureListingComponent  = authPermission.includes("figure_lists") ? "productManagement/figure_listings" : "error/403";
+
 
 
 let routes = [
@@ -23,6 +25,8 @@ let routes = [
     { path: '/roles', component: require('./components/admin/'+ settingsRolesComponent +'.vue').default },
     { path: '/permissions', component: require('./components/admin/'+ settingsPermissionsComponent +'.vue').default },
     { path: '/profile', component: require('./components/admin/user/UserProfile.vue').default },
+
+    { path: '/figure-listing', component: require('./components/admin/'+ figureListingComponent +'.vue').default },
     
   ]
 
