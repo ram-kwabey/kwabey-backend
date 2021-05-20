@@ -73,6 +73,18 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->middleware(['web','a
 Route::prefix('admin')->namespace('Admin')->name('admin.')->middleware(['web','auth'])->group(function(){
     //axios requests
     Route::post('store-figure','FigureController@createUpdateFigure')->name('store-figure');
+
+    //Size
+    Route::post('store-size','SizeController@createUpdateSize')->name('store-size');
+    
+    //Color
+    Route::post('store-color','ColorController@createUpdateColor')->name('store-color');
+    
+    //Material
+    Route::post('store-material','MaterialController@createUpdateMaterial')->name('store-material');
+
+    //Fit
+    Route::post('store-fit','FitController@createUpdateFit')->name('store-fit');
     
 });
 

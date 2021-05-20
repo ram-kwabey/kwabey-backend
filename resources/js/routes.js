@@ -15,7 +15,10 @@ let settingsRolesComponent       = authPermission.includes("list_settings") ? "s
 let settingsPermissionsComponent  = authPermission.includes("list_settings") ? "settings/UsersPermissionComponent" : "error/403";
 
 let figureListingComponent  = authPermission.includes("figure_lists") ? "productManagement/figure_listings" : "error/403";
-
+let sizeListingComponent  = authPermission.includes("size_lists") ? "productManagement/size_listings" : "error/403";
+let colorListingComponent  = authPermission.includes("color_lists") ? "productManagement/color_listings" : "error/403";
+let materialListingComponent  = authPermission.includes("material_lists") ? "productManagement/material_listings" : "error/403";
+let fitListingComponent = authPermission.includes('fit_lists') ? "productManagement/fit_listings" : "error/403";
 
 
 let routes = [
@@ -27,6 +30,10 @@ let routes = [
     { path: '/profile', component: require('./components/admin/user/UserProfile.vue').default },
 
     { path: '/figure-listing', component: require('./components/admin/'+ figureListingComponent +'.vue').default },
+    { path: '/size-listing', component: require('./components/admin/'+ sizeListingComponent +'.vue').default },
+    { path: '/color-listing', component: require('./components/admin/'+ colorListingComponent +'.vue').default },
+    { path: '/material-listing', component: require('./components/admin/'+ materialListingComponent +'.vue').default },
+    { path: '/fit_listing', component: require('./components/admin/'+materialListingComponent +'.vue').default },
     
   ]
 

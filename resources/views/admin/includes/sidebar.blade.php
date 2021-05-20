@@ -46,6 +46,70 @@
           </li>
           @endcan
 
+          @can('product_mgt_settings')
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-briefcase"></i>
+              <p>
+                Product Mgt
+                <i class="right fas fa-angle-right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview" style="display: none;">
+
+              @can('figure_lists')
+              <li class="nav-item">
+                <router-link class="nav-link" to="/figure-listing">
+                  <i class="nav-icon fab fa-slideshare"></i>
+                  <p>
+                    Figure
+                  </p>
+                </router-link>
+              </li>
+              @endcan
+              @can('size_lists')
+              <li class="nav-item">
+                <router-link class="nav-link" to="/size-listing">
+                  <i class="nav-icon far fa-id-badge"></i>
+                  <p>
+                    Size
+                  </p>
+                </router-link>
+              </li>
+              @endcan
+              @can('color_lists')
+              <li class="nav-item">
+                <router-link class="nav-link" to="/color-listing">
+                  <i class="nav-icon fab fa-slideshare"></i>
+                  <p>
+                    Color
+                  </p>
+                </router-link>
+              </li>
+              @endcan
+              @can('material_lists')
+              <li class="nav-item">
+                <router-link class="nav-link" to="/material-listing">
+                  <i class="nav-icon fas fa-envelope-open-text"></i>
+                  <p>
+                    Material
+                  </p>
+                </router-link>
+              </li>
+              @endcan
+              @can('fit_lists')
+              <li class="nav-item">
+                <router-link class="nav-link" to="/fit-listing">
+                  <i class="nav-icon fas fa-envelope-open-text"></i>
+                  <p>
+                    Fit
+                  </p>
+                </router-link>
+              </li>
+              @endcan
+            </ul>
+          </li>
+          @endcan
           @can('list_settings')
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
