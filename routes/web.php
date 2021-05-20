@@ -73,7 +73,9 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->middleware(['web','a
 Route::prefix('admin')->namespace('Admin')->name('admin.')->middleware(['web','auth'])->group(function(){
     //axios requests
     Route::post('store-figure','FigureController@createUpdateFigure')->name('store-figure');
-    
+    Route::get('figure-list','FigureController@index')->name('figure-list');
+    Route::delete('delete-figure/{id}','FigureController@destroy')->name('delete-figure');
+    Route::post('restore-figure/{id}','FigureController@restoreUser')->name('restore-figure');
 });
 
 
