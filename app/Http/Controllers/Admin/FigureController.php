@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Figure;
 use App\Repository\FigureRepository;
 use App\Http\Requests\StoreFigureRequest;
+use JamesDordoy\LaravelVueDatatable\Http\Resources\DataTableCollectionResource;
 class FigureController extends Controller
 {
 
@@ -17,13 +18,16 @@ class FigureController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource with pagination.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+
+        $figureData = $this->figureRepository->getDataWithPagination($request->all());
+        return new DataTableCollectionResource($figureData);
+        
     }
 
     /**
@@ -62,29 +66,6 @@ class FigureController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -92,6 +73,27 @@ class FigureController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $this->figureRepository->getData(['id' => $id],'delete',[],0);
+            return ['status'=>'success'];
+        } catch (ModelNotFoundException $e) {
+            return ['status'=>'error'];
+        }
+    }
+
+    /**
+     * Get the specified trashed resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restoreUser($id)
+    { 
+        try {
+            $this->figureRepository->getData(['id' => $id],'restore',[],0);
+            return ['status'=>'success'];
+        } catch (ModelNotFoundException $e) {
+            return ['status'=>'error'];
+        }
     }
 }
