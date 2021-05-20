@@ -33,7 +33,7 @@ let routes = [
     { path: '/size-listing', component: require('./components/admin/'+ sizeListingComponent +'.vue').default },
     { path: '/color-listing', component: require('./components/admin/'+ colorListingComponent +'.vue').default },
     { path: '/material-listing', component: require('./components/admin/'+ materialListingComponent +'.vue').default },
-    { path: '/fit_listing', component: require('./components/admin/'+materialListingComponent +'.vue').default },
+    { path: '/fit_listing', component: require('./components/admin/'+ fitListingComponent +'.vue').default },
     
   ]
 

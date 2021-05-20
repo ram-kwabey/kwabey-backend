@@ -82,6 +82,9 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->middleware(['web','a
     
     //Color
     Route::post('store-color','ColorController@createUpdateColor')->name('store-color');
+    Route::get('color-list','ColorController@index')->name('color-list');
+    Route::delete('delete-color/{id}','ColorController@destroy')->name('delete-color');
+    Route::post('restore-color/{id}','ColorController@restoreUser')->name('restore-color');
     
     //Material
     Route::post('store-material','MaterialController@createUpdateMaterial')->name('store-material');
