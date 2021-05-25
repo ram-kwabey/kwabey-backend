@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Material;
 use App\Repository\MaterialRepository;
 use App\Http\Requests\StoreMaterialRequest;
+use JamesDordoy\LaravelVueDatatable\Http\Resources\DataTableCollectionResource;
 class MaterialController extends Controller
 {
 
@@ -21,9 +22,10 @@ class MaterialController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+       $materialData = $this->materialRepository->getDataWithPagination($request->all());
+        return new DataTableCollectionResource($materialData);
     }
 
     /**
@@ -48,42 +50,6 @@ class MaterialController extends Controller
         return response()->json(['message' => $this->msg], $this->statusCode);
     }
 
-    
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -92,6 +58,27 @@ class MaterialController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $this->materialRepository->getData(['id' => $id],'delete',[],0);
+            return ['status'=>'success'];
+        } catch (ModelNotFoundException $e) {
+            return ['status'=>'error'];
+        }
+    }
+
+    /**
+     * Get the specified trashed resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restoreUser($id)
+    { 
+        try {
+            $this->materialRepository->getData(['id' => $id],'restore',[],0);
+            return ['status'=>'success'];
+        } catch (ModelNotFoundException $e) {
+            return ['status'=>'error'];
+        }
     }
 }

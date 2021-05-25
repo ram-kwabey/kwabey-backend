@@ -19,7 +19,9 @@ let sizeListingComponent  = authPermission.includes("size_lists") ? "productMana
 let colorListingComponent  = authPermission.includes("color_lists") ? "productManagement/color_listings" : "error/403";
 let materialListingComponent  = authPermission.includes("material_lists") ? "productManagement/material_listings" : "error/403";
 let fitListingComponent = authPermission.includes('fit_lists') ? "productManagement/fit_listings" : "error/403";
-
+let categoryListingComponent = authPermission.includes('category_lists') ? "productManagement/category_listings" : "error/403";
+let subCategoryListingComponent = authPermission.includes('sub_category_lists') ? "productManagement/sub_category_listings" : "error/403";
+let pageListingComponent = authPermission.includes('page_lists') ? "pageManagement/page_listings" : "error/403";
 
 let routes = [
     { path: '/home', component: require('./components/admin/'+ dashboardComponent +'.vue').default },
@@ -33,7 +35,9 @@ let routes = [
     { path: '/size-listing', component: require('./components/admin/'+ sizeListingComponent +'.vue').default },
     { path: '/color-listing', component: require('./components/admin/'+ colorListingComponent +'.vue').default },
     { path: '/material-listing', component: require('./components/admin/'+ materialListingComponent +'.vue').default },
-    { path: '/fit_listing', component: require('./components/admin/'+ fitListingComponent +'.vue').default },
+    { path: '/fit-listing', component: require('./components/admin/'+ fitListingComponent +'.vue').default },
+    { path: '/category-listing', component: require('./components/admin/'+ categoryListingComponent +'.vue').default },
+    { path: '/sub_category-listing', component: require('./components/admin/'+ subCategoryListingComponent +'.vue').default },
     
   ]
 

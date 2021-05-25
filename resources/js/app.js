@@ -28,16 +28,11 @@ Vue.use(Toaster, {timeout: 5000})
 
 Vue.component('pagination', require('laravel-vue-pagination'));
 
-/*import { VuejsDatatableFactory } from 'vuejs-datatable';
-Vue.use( VuejsDatatableFactory );*/
-
-
 //Import Datatable
 import DataTable from 'laravel-vue-datatable';
-
 import { Form, HasError, AlertError } from 'vform'
-Vue.use(DataTable);
 
+Vue.use(DataTable);
 
 //Import Datetime
 import { Datetime } from 'vue-datetime';

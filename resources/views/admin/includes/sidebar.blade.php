@@ -56,7 +56,26 @@
               </p>
             </a>
             <ul class="nav nav-treeview" style="display: none;">
-
+              @can('category_lists')
+              <li class="nav-item">
+                <router-link class="nav-link" to="/category-listing">
+                  <i class="nav-icon fab fa-slideshare"></i>
+                  <p>
+                    Category
+                  </p>
+                </router-link>
+              </li>
+              @endcan
+               @can('sub_category_lists')
+              <li class="nav-item">
+                <router-link class="nav-link" to="/sub_category-listing">
+                  <i class="nav-icon fab fa-slideshare"></i>
+                  <p>
+                    Sub-Category
+                  </p>
+                </router-link>
+              </li>
+              @endcan
               @can('figure_lists')
               <li class="nav-item">
                 <router-link class="nav-link" to="/figure-listing">
@@ -106,7 +125,7 @@
                   </p>
                 </router-link>
               </li>
-              @endcan
+              @endcan              
             </ul>
           </li>
           @endcan

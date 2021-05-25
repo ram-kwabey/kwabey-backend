@@ -14,7 +14,6 @@ class ColorController extends Controller
     public function __construct(ColorRepository $colorRepository)
     {
         $this->colorRepository = $colorRepository;
-        
     }
 
     /**
@@ -33,7 +32,7 @@ class ColorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createUpdateColor(StoreColorRequest $request)
+    public function createUpdateColor(StoreColorRequest $request)   
     {
         try {
             $request['slug'] = str_replace(' ','_', $request->input('name'));
@@ -72,7 +71,7 @@ class ColorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function restoreUser($id)
+    public function restoreColor($id)
     { 
         try {
             $this->colorRepository->getData(['id' => $id],'restore',[],0);

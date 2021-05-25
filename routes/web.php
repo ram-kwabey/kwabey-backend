@@ -71,26 +71,50 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->middleware(['web','a
 });
 
 Route::prefix('admin')->namespace('Admin')->name('admin.')->middleware(['web','auth'])->group(function(){
+
+    //Category
+    Route::post('store-category','CategoryController@createUpdateCategory')->name('store-category');
+    Route::get('category-list','CategoryController@index')->name('category-list');
+    Route::delete('delete-category/{id}','CategoryController@destroy')->name('delete-category');
+    Route::post('restore-category/{id}','CategoryController@restoreCategory')->name('restore-category');
+    Route::get('get-category','CategoryController@geCategoryData')->name('get-category');
+
+    //Sub-Category
+    Route::post('store-subcategory','SubCategoryController@createUpdateSubCategory')->name('store-subcategory');
+    Route::get('sub-category-list','SubCategoryController@index')->name('subcategory-list');
+    Route::delete('delete-subcategory/{id}','SubCategoryController@destroy')->name('delete-subcategory');
+    Route::post('restore-subcategory/{id}','SubCategoryController@restoreSubCategory')->name('restore-subcategory');
+
     //axios requests
     Route::post('store-figure','FigureController@createUpdateFigure')->name('store-figure');
     Route::get('figure-list','FigureController@index')->name('figure-list');
     Route::delete('delete-figure/{id}','FigureController@destroy')->name('delete-figure');
     Route::post('restore-figure/{id}','FigureController@restoreUser')->name('restore-figure');
+    Route::get('get-figure','FigureController@geFigureData')->name('get-figure');
 
     //Size
     Route::post('store-size','SizeController@createUpdateSize')->name('store-size');
+    Route::get('size-list','SizeController@index')->name('size-list');
+    Route::delete('delete-size/{id}','SizeController@destroy')->name('delete-size');
+    Route::post('restore-size/{id}','SizeController@restoreUser')->name('restore-size');
     
     //Color
     Route::post('store-color','ColorController@createUpdateColor')->name('store-color');
     Route::get('color-list','ColorController@index')->name('color-list');
     Route::delete('delete-color/{id}','ColorController@destroy')->name('delete-color');
-    Route::post('restore-color/{id}','ColorController@restoreUser')->name('restore-color');
+    Route::post('restore-color/{id}','ColorController@restoreColor')->name('restore-color');
     
     //Material
     Route::post('store-material','MaterialController@createUpdateMaterial')->name('store-material');
+    Route::get('material-list','MaterialController@index')->name('material-list');
+    Route::delete('delete-material/{id}','MaterialController@destroy')->name('delete-material');
+    Route::post('restore-material/{id}','MaterialController@restoreUser')->name('restore-material');
 
     //Fit
     Route::post('store-fit','FitController@createUpdateFit')->name('store-fit');
+    Route::get('fit-list','FitController@index')->name('fit-list');
+    Route::delete('delete-fit/{id}','FitController@destroy')->name('delete-fit');
+    Route::post('restore-fit/{id}','FitController@restoreUser')->name('restore-fit');
 
 });
 

@@ -7,65 +7,36 @@
             <button class="btn btn-primary btn-sm float-right" v-on:click="addSizeModal()">
                     <i class="fas fa-plus"></i> Add Size
             </button>
-            <!-- <button class="btn btn-warning mr-2 btn-sm float-right" @click="handleUsersCsv($event)">Export <i class="fas fa-file-export"></i></button> -->
+           
         </h3>
         <div class="content patient-detail">
             <div class="container-fluid">
                 <div class="row justify-content-center">
                     <div class="col-md-12">
-                        <div class="card card-default questionnaires-table">
-
-                            <div class="card-body">
-                                 <div class="search-content-tab">
-                                    <div class="row">
-                                              <div class="col-md-3">
-                                                  <div class="form-group">
-                                                    <input type="text" class="form-control" placeholder="Search" v-model="search" @keyup.enter="searchTemplate()" @keyup="searchTemplateKeyup()">
-                                                    <span class="error search_error"></span>
-                                                  </div>
-                                              </div>
-                                              <div class="col-md-3">
-                                                  <div class="form-group">
-                                                      <button type="button" @click="searchTemplate()" class="btn btn-primary btn-gradient" ><i class="fa fa-search" aria-hidden="true"></i> Search</button>
-                                                  </div>
-                                              </div>
+                        <div class="card card-default">
+                            <data-table url="admin/size-list" :columns="columns" ref="sizeTable" :filters="filters">
+                                <div slot="filters" slot-scope="{ tableFilters, perPage }">
+                                    <div class="row mb-2">
+                                        <div class="col-md-3">
+                                            <select class="form-control" v-model="tableFilters.length">
+                                                <option :key="page" v-for="page in perPage">{{ page }}</option>
+                                            </select>
                                         </div>
+                                        <div class="col-md-2">
+                                            <select class="form-control" v-model="filters.type" required>
+                                                <option v-for="option in data_type" :key="option.id" :value="option.type" >{{ option.type }}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input
+                                                name="name"
+                                                class="form-control"
+                                                v-model="tableFilters.search"
+                                                placeholder="Search Size">
+                                        </div>
+                                    </div>
                                 </div>
-                                <table id="example1" class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Title</th>
-                                            <th>Amount</th>
-                                            <th>After Approval Amount</th>
-                                            <th>Created Date</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                        <tr v-for="source in pagination.data" :key="source.id">
-                                            <td>{{ source.title}}</td>
-                                            <td>{{ source.amount}}</td>
-                                            <td>{{ source.after_approval_amount}}</td>
-                                            <td>{{ source.created_at | dateFormat}}</td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary btn-sm" v-on:click="editModal(source)"><i class="fas fa-briefcase-medical"></i> Edit</button>
-                                                
-                                                <button  href="javascript:void(0)" class="btn btn-danger btn-sm" v-on:click="deleteSource(source.id)"><i class="fas fa-trash-alt"></i> Delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr v-if="totalRecord == 0"><td colspan="6" style="text-align: center;">No record found.</td></tr>
-                                    </tbody>
-                                </table>
-								<span v-if="totalRecord > 10"> 
-									  <pagination
-									  :pagination="pagination"
-									  :current_page="current_page"
-									  :last_page="last_page"
-									  ></pagination>
-								</span>
-                            </div>
-                            
+                            </data-table>
                         </div>
                     </div>
                 </div>
@@ -82,18 +53,18 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form @submit.prevent="editMode ? editSize() : createSize()" @keydown="form.onKeydown($event)">
+                        <form @submit.prevent="editMode ? createUpdateSize() : createUpdateSize()" @keydown="form.onKeydown($event)">
                             <div class="modal-body">
                                 <alert-error :form="form"></alert-error>
                                 <div class="form-group">
                                     <label for="title" class="col-md-3">Title</label>
                                     <input v-model="form.title" type="text" name="title" id="title"
-                                    class="form-control" :class="{ 'is-invalid': form.errors.has('title') }" placeholder="Source Title">
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('title') }" placeholder="Title">
                                     <has-error :form="form" field="title"></has-error>
                                 </div>
                                 <div class="form-group">
                                     <label for="description" class="col-md-3">Description</label>
-                                    <textarea id="description" v-model="form.description" size="lg" class="form-control" :class="{ 'is-invalid': form.errors.has('description') }" placeholder="Large textarea"></textarea>
+                                    <textarea id="description" v-model="form.description" size="lg" class="form-control" :class="{ 'is-invalid': form.errors.has('description') }" placeholder="Description"></textarea>
                                     <has-error :form="form" field="description"></has-error>
                                 </div>
                             </div>
@@ -113,14 +84,19 @@
 </template>
 
 <script>
+    import SizeListActions from './size_list_actions.vue'
     export default {
+        components:{
+            SizeListActions
+        },
+        mounted() {
+            console.log('Component mounted.')
+        },
         created() {
             this.showLoader();
-            //this.getSources();
         },
         data() {
             return {
-               
                 pagination: {},
                 totalRecord: 0,
                 current_page : '',
@@ -131,10 +107,74 @@
                     id: '',
                     title: '',
                     description:'',
-                })
+                }),
+                loading: false,
+                results : {},
+                success : null,
+                alert_success: false,
+                user: null,
+                data_type:[
+                    {
+                    id:1,
+                    type:'All'
+                    },
+                    {
+                    id:2,
+                    type: 'Archived'
+                    }
+                ],
+                columns: [
+                    {
+                        label: 'Title',
+                        name: 'title',
+                        orderable: true,
+                    },
+                    {
+                        label: 'Description',
+                        name: 'description',
+                        orderable: true,
+                    },
+                    {
+                        label: 'Slug',
+                        name: 'slug',
+                        orderable: true,
+                    },
+                    {
+                        label: 'Actions',
+                        name: 'Actions',
+                        orderable: false,
+                        classes: { 
+                            'btn': true,
+                            'btn-primary': true,
+                            'btn-sm': true,
+                        },
+                        event: "click",
+                        handler: this.dataTableEvent,
+                        component: SizeListActions, 
+                    },
+                ],
+                filters: {
+                    role: '',
+                    type: 'All'
+                },
+                rows: [],
+                page: 1,
+                per_page: 10,
+               
             }
         },
         methods: {
+            dataTableEvent(payload,data){
+                if(payload == 'edit'){
+                    this.editSize(data);
+                }
+                if(payload == 'restoreSize'){
+                    this.restoreSize(data);
+                }
+                if(payload == 'deleteSize'){
+                    this.deleteSize(data);
+                }
+            },
             addSizeModal () {
                 this.form.reset();
                 this.form.clear();
@@ -142,55 +182,32 @@
                 this.form.status = 1;
                 $("#sizeModal").modal('show');
             },
-            editModal (data) {
-                // Make a request for a get sources 
+            createUpdateSize() {
+                // Submit the form via a POST request
+                this.showLoader();
+                this.form.post('/admin/store-size')
+                .then(({ data }) => { 
+                    this.getSize();
+                    Toast.fire({ icon: 'success', title: 'Size added successfully' });
+                    $("#sizeModal").modal('hide');
+                    this.removeLoader();
+                })
+                .catch((error)=>{
+                    Swal.fire('Failed!', 'Something went wrong.', 'warning');
+                    this.removeLoader();
+                });
+            },
+            editSize(data){
                 this.form.reset();
                 this.form.clear();
                 this.form.fill(data);
                 this.editMode = true;
-                
                 $("#sizeModal").modal('show');
             },
-            createSize() {
-                // Submit the form via a POST request
-                this.showLoader();
-                this.form.post('admin/store-size')
-                .then(({ data }) => { 
-                    //this.getSources();
-                    Toast.fire({ icon: 'success', title: 'size added successfully' });
-                    $("#sizeModal").modal('hide');
-                    //this.$Progress.finish()
-                    this.removeLoader();
-                })
-                .catch((error)=>{
-                    Swal.fire('Failed!', 'Something went wrong.', 'warning');
-                    this.$Progress.finish()
-                    this.removeLoader();
-                });
-            },
-            editSource(event) {
-                this.removeLoader();
-                this.$Progress.start();
-                this.form.put('api/appointmentSources/' + this.form.id)
-                .then(({ data }) => { 
-                    this.getSources();
-                    Toast.fire({ icon: 'success', title: 'Source updated successfully' });
-                    $("#sourceModal").modal('hide');
-                    this.$Progress.finish()
-                    this.removeLoader();
-                })
-                .catch((error)=>{
-                    Swal.fire('Failed!', 'Something went wrong.', 'warning');
-                    this.$Progress.finish()
-                    this.removeLoader();
-                });
-                
-            },
-
-            deleteSource (id) {
+            deleteSize(data){
                 Swal.fire({
                     title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
+                    text: "Do you really want to do this!",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -198,63 +215,45 @@
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.value) {
-                       
-                        this.showLoader();
-
-                        axios.delete('api/appointmentSources/'+id).then(({data})=>{
-                            console.log(data.status);
+                        axios.delete('admin/delete-size/' + data.id,{_method:'DELETE'}).then(({data})=>{
                             if(data.status == "success"){
-                                this.getSources();
-                                Swal.fire('Deleted!', 'Source has been deleted.', 'success')
+                                this.getSize();
+                                Swal.fire('Deleted!', 'Size has been deleted.', 'success')
                             }else{
                                 Swal.fire('Failed!', 'Something went wrong.', 'warning')
                             }
-                            
-                            this.removeLoader();
-
                         }).catch(({data})=>{
                             Swal.fire('Failed!', 'Something went wrong.', 'warning')
-                            this.removeLoader();
                         });
                     }
                 })
             },
-            searchTemplateKeyup(){
-                if(this.search == ''){
-                    this.totalRecord = 0;
-                    this.current_page = {};
-                    this.pagination = 1;
-                    this.last_page = '';
-                    this.getSources();
-                }
+            restoreSize(data){
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "Do you really want to do this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, restore it!",
+                }).then((result) => {
+                    if (result.value) {
+                        axios.post("/admin/restore-size/" + data.id).then(({ data }) => {
+                            if (data.status == "success") {
+                                this.getSize();
+                                Swal.fire("Restored!", "Size has been restored.", "success");
+                            } else {
+                                Swal.fire("Failed!", "Something went wrong.", "warning");
+                            }
+                        }).catch(({ data }) => {
+                            Swal.fire("Failed!", "Something went wrong.", "warning");
+                        });
+                    }
+                })
             },
-            searchTemplate(){
-                if(this.search != ''){
-                    $('.search_error').text('');
-                    this.totalRecord = 0;
-                    this.current_page = 1;
-                    this.pagination = {};
-                    this.last_page = '';
-                    this.getSources();
-                }else{
-                    $('.search_error').text('This field is required.');
-                    return false;
-                }
-            },
-            getSources () {
-                this.showLoader();
-                this.pageURL('/api/getSourcesWithPaginate'); 
-            },
-            pageURL (url) {
-                let param = {"search" : this.search }
-                axios.get(url,{ params: param}).then(({ data }) => {
-                    this.current_page = data.current_page;
-                    this.last_page    = data.last_page;
-                    this.pagination   = data; 
-                    this.totalRecord  = data.total;
-                   
-                    this.removeLoader();
-                });
+            getSize(){
+                this.$refs.sizeTable.getData();
             },
             showLoader()
             {

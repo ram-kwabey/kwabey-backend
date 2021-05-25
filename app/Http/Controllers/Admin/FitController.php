@@ -4,15 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Figure;
-use App\Repository\FigureRepository;
-use App\Http\Requests\StoreFigureRequest;
-class FigureController extends Controller
+use App\Models\Fit;
+use App\Repository\FitRepository;
+use App\Http\Requests\StoreFitRequest;
+use JamesDordoy\LaravelVueDatatable\Http\Resources\DataTableCollectionResource;
+class FitController extends Controller
 {
 
-    public function __construct(FigureRepository $figureRepository)
+    public function __construct(FitRepository $fitRepository)
     {
-        $this->figureRepository = $figureRepository;
+        $this->fitRepository = $fitRepository;
         
     }
 
@@ -21,9 +22,10 @@ class FigureController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $fitData = $this->fitRepository->getDataWithPagination($request->all());
+        return new DataTableCollectionResource($fitData);
     }
 
     /**
@@ -31,15 +33,15 @@ class FigureController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createUpdateFigure(StoreFigureRequest $request)
+   public function createUpdatefit(StorefitRequest $request)   
     {
         try {
-            $request['slug'] = str_replace(' ','_', $request->input('title'));
+            $request['slug'] = str_replace(' ','_', $request->input('name'));
             
-            $figureData = $this->figureRepository->createUpdateData(['id'=> $request->id],$request->all());
+            $fitData = $this->fitRepository->createUpdateData(['id'=> $request->id],$request->all());
             
             $this->statusCode = 200;
-            $this->msg = 'Figure updated successfully.';
+            $this->msg = 'Fit updated successfully.';
         }
         catch (\Exception $e) {
             $this->statusCode = 400;
@@ -47,51 +49,36 @@ class FigureController extends Controller
         }
         return response()->json(['message' => $this->msg], $this->statusCode);
     }
-
     
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+     public function destroy($id)
     {
-        //
+        try {
+            $this->fitRepository->getData(['id' => $id],'delete',[],0);
+            return ['status'=>'success'];
+        } catch (ModelNotFoundException $e) {
+            return ['status'=>'error'];
+        }
+    }
+
+    /**
+     * Get the specified trashed resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restoreUser($id)
+    { 
+        try {
+            $this->fitRepository->getData(['id' => $id],'restore',[],0);
+            return ['status'=>'success'];
+        } catch (ModelNotFoundException $e) {
+            return ['status'=>'error'];
+        }
     }
 }

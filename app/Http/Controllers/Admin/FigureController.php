@@ -96,4 +96,15 @@ class FigureController extends Controller
             return ['status'=>'error'];
         }
     }
+
+    public function geFigureData(){
+        try {
+            $figureData = $this->figureRepository->getData([],'get',[],0);
+            return response()->json(['status' => 'success','figureData'=>$figureData]);
+            
+        } catch (ModelNotFoundException $e) {
+            
+            return response()->json(['status' => 'error',]);
+        }
+    }
 }

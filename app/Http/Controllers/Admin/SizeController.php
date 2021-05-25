@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Size;
 use App\Repository\SizeRepository;
 use App\Http\Requests\StoreSizeRequest;
+use JamesDordoy\LaravelVueDatatable\Http\Resources\DataTableCollectionResource;
 class SizeController extends Controller
 {
 
@@ -21,9 +22,10 @@ class SizeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+       $colorData = $this->sizeRepository->getDataWithPagination($request->all());
+       return new DataTableCollectionResource($colorData);
     }
 
     /**
@@ -49,49 +51,35 @@ class SizeController extends Controller
     }
 
     
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+     public function destroy($id)
     {
-        //
+        try {
+            $this->sizeRepository->getData(['id' => $id],'delete',[],0);
+            return ['status'=>'success'];
+        } catch (ModelNotFoundException $e) {
+            return ['status'=>'error'];
+        }
+    }
+
+    /**
+     * Get the specified trashed resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restoreUser($id)
+    { 
+        try {
+            $this->sizeRepository->getData(['id' => $id],'restore',[],0);
+            return ['status'=>'success'];
+        } catch (ModelNotFoundException $e) {
+            return ['status'=>'error'];
+        }
     }
 }
